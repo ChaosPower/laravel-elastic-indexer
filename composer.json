@@ -1,0 +1,25 @@
+{
+    "name": "chaospower/laravel-elastic-eqb",
+    "description": "Laravel Elastic Eloquent Query Builder",
+    "type": "project",
+    "require": {
+        "guzzlehttp/guzzle": "6.1.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "^0.9.4",
+        "phpunit/phpunit": "^4.8"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Randy Glenn Aguirre",
+            "email": "rgat.randy@gmail.com"
+        }
+    ],
+
+    "autoload": {
+        "psr-4": {"ElasticEqb\\": "src/"}
+    },
+
+    "minimum-stability": "stable"
+}
