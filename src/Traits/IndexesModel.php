@@ -11,7 +11,13 @@ use ReflectionClass;
  */
 trait IndexesModel
 {
+    /**
+     * @var
+     */
     public $index;
+    /**
+     * @var
+     */
     public $type;
 
     /**

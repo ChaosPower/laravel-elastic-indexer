@@ -12,9 +12,11 @@ use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 class Document extends Model
 {
+    /**
+     * @param \Illuminate\Database\Eloquent\Model $model
+     */
     public function __construct(EloquentModel $model)
     {
         parent::__construct($model);
-
     }
 }

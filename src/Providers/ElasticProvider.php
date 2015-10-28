@@ -5,7 +5,11 @@ namespace ElasticEqb\Providers;
 use ElasticEqb\Observers\ModelObserver;
 use Illuminate\Support\ServiceProvider;
 
-//use Illuminate\Contracts\Events\Dispatcher;
+/**
+ * Class ElasticProvider
+ *
+ * @package ElasticEqb\Providers
+ */
 class ElasticProvider extends ServiceProvider
 {
     /**
@@ -20,6 +24,9 @@ class ElasticProvider extends ServiceProvider
         );
     }
 
+    /**
+     *
+     */
     public function boot()
     {
         $this->publishes(
