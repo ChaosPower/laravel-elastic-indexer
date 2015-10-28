@@ -3,9 +3,9 @@
 namespace ElasticEqb\Providers;
 
 use ElasticEqb\Observers\ModelObserver;
-//use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Events\Dispatcher;
 use Illuminate\Support\ServiceProvider;
+
+//use Illuminate\Contracts\Events\Dispatcher;
 class ElasticProvider extends ServiceProvider
 {
     /**
@@ -29,12 +29,12 @@ class ElasticProvider extends ServiceProvider
 
         // Check if elastic is set to auto index
 
-        if(config('elastic.auto_index')) {
+        if (config('elastic.auto_index')) {
             /**
              * @var \Illuminate\Contracts\Events\Dispatcher $events
              */
             $events = $this->app->make('events');
-            $events->listen('eloquent.saved*', function($model) use($events) {
+            $events->listen('eloquent.saved*', function ($model) use ($events) {
                 new ModelObserver($model, $events);
             });
         }

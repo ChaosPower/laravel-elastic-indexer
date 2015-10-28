@@ -2,9 +2,11 @@
 
 namespace ElasticEqb\Observers;
 
-use Illuminate\Contracts\Events\Dispatcher;
+use ElasticEqb\Api\Indices\Index;
+use ElasticEqb\Interfaces\ElasticIndexer;
+use ElasticEqb\Traits\IndexesModel;
 use Event;
-use ReflectionClass;
+use Illuminate\Contracts\Events\Dispatcher;
 
 /**
  * Class ModelObserver
@@ -22,16 +24,23 @@ class ModelObserver
      */
     protected $event;
 
+    protected $indexer;
+
     /**
      * @param                                         $model
      * @param \Illuminate\Contracts\Events\Dispatcher $event
      */
     public function __construct($model, Dispatcher $event)
     {
-        $this->model = $model;
-        $this->event = $event;
+            if(!$model instanceof ElasticIndexer) {
+                return;
+            }
 
-        $this->boot();
+            $this->model = $model;
+            $this->event = $event;
+            $this->indexer = new Index($model);
+
+            $this->boot();
     }
 
 
@@ -42,5 +51,10 @@ class ModelObserver
     {
         // Call the model trait indexer
         $this->model->indexModel();
+
+        // Call Indices
+        if (!$this->indexer->create($this->model->index)) {
+
+        }
     }
 }
