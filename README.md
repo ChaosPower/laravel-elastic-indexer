@@ -1,4 +1,2 @@
-# Laravel Elastic Indexer
-
-
-# Progress 5%
+# laravel-elastic-eqb
+Laravel Elastic Eloquent Query Builder

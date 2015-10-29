@@ -5,13 +5,19 @@ use ElasticEqb\Api\Indices\Index;
 use ReflectionClass;
 
 /**
- * Class IndicesModel
+ * Class IndexesModel
  *
  * @package ElasticEqb\Traits
  */
-trait IndicesModel
+trait IndexesModel
 {
+    /**
+     * @var
+     */
     public $index;
+    /**
+     * @var
+     */
     public $type;
 
     /**

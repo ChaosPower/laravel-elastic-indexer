@@ -6,4 +6,5 @@ interface IndicesTemplate
 {
     public function has($index);
     public function create($index, $config = []);
+    public function document();
 }
