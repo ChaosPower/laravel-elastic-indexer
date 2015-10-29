@@ -5,11 +5,11 @@ use ElasticEqb\Api\Indices\Index;
 use ReflectionClass;
 
 /**
- * Class IndexesModel
+ * Class DoesElasticIndexer
  *
  * @package ElasticEqb\Traits
  */
-trait IndexesModel
+trait DoesElasticIndexer
 {
     /**
      * @var

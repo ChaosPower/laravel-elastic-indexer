@@ -2,7 +2,7 @@
 namespace ElasticEqb\Interfaces;
 
 /**
- * Interface ElasticIndexer
+ * Interface DoesElasticIndexer
  *
  * @package ElasticEqb\Interfaces
  */

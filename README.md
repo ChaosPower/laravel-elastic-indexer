@@ -38,7 +38,7 @@ ElasticEqb\Providers\ElasticProvider::class
 
 # Using Elastic Indexer
 
-All models should use and implement ElasticIndexer.
+All models should use and implement DoesElasticIndexer.
 Doing so will allow the service to listen to specific models
 and CRUD the Elastic side of the model. It will also do the elastic map automatically.
 
@@ -48,9 +48,9 @@ and CRUD the Elastic side of the model. It will also do the elastic map automati
  *
  * @package Travel\Models
  */
-class Agency extends Model implements ElasticIndexer
+class Agency extends Model implements DoesElasticIndexer
 {
-    use ElasticIndexer;
+    use DoesElasticIndexer;
 }
 ```
 
@@ -60,7 +60,7 @@ class Agency extends Model implements ElasticIndexer
 - ElasticSchemaBuilder
 
 # TODOs
-Give ability to listen to all models not having the instance of ElasticIndexer
+Give ability to listen to all models not having the instance of DoesElasticIndexer
 
 # Plans
 
