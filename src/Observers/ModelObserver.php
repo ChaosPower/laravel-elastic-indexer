@@ -2,9 +2,8 @@
 
 namespace ElasticEqb\Observers;
 
-use Illuminate\Contracts\Events\Dispatcher;
-use Event;
-use ReflectionClass;
+use ElasticEqb\Listeners\ElasticListener;
+use Illuminate\Contracts\Foundation\Application;
 
 /**
  * Class ModelObserver
@@ -13,34 +12,54 @@ use ReflectionClass;
  */
 class ModelObserver
 {
+
+    /**
+     * @var \Illuminate\Contracts\Foundation\Application
+     */
+    protected $app;
     /**
      * @var
      */
-    protected $model;
-    /**
-     * @var \Illuminate\Contracts\Events\Dispatcher
-     */
-    protected $event;
+    protected $events;
+
 
     /**
-     * @param                                         $model
-     * @param \Illuminate\Contracts\Events\Dispatcher $event
+     * @var array
      */
-    public function __construct($model, Dispatcher $event)
+    protected $eloquentEvents = [
+        'creating',
+        'created',
+        'updating',
+        'updated',
+        'deleting',
+        'deleted',
+        'saving',
+        'saved',
+        'restoring',
+        'restored',
+    ];
+
+    /**
+     * @param \Illuminate\Contracts\Foundation\Application $app
+     */
+    public function __construct(Application $app)
     {
-        $this->model = $model;
-        $this->event = $event;
-
+        $this->app = $app;
+        // Boot the observer
         $this->boot();
     }
 
 
     /**
-     * Function for boot indexer
+     * Function to boot indexer
      */
     public function boot()
     {
-        // Call the model trait indexer
-        $this->model->indexModel();
+        $this->events = $this->app->make('events');
+
+        // Loop events
+        foreach($this->eloquentEvents as $event) {
+            $this->events->listen('eloquent.'.$event.'*', ElasticListener::class . '@'.$event);
+        }
     }
 }
