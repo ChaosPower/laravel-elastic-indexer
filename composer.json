@@ -20,7 +20,8 @@
     ],
 
     "autoload": {
-        "psr-4": {"ElasticEqb\\": "src/"}
+        "psr-4": {"ElasticEqb\\": "src/"},
+        "psr-4": {"ElasticEqbTest\\": "tests/"},
     },
 
     "minimum-stability": "stable"
