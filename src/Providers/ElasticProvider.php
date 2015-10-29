@@ -22,10 +22,11 @@ class ElasticProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__ . '/../../config/elastic.php', 'elastic'
         );
+
     }
 
     /**
-     *
+     * Boot model observer
      */
     public function boot()
     {
@@ -35,16 +36,8 @@ class ElasticProvider extends ServiceProvider
             ], 'config');
 
         // Check if elastic is set to auto index
-
         if (config('elastic.auto_index')) {
-            /**
-             * @var \Illuminate\Contracts\Events\Dispatcher $events
-             */
-            $events = $this->app->make('events');
-            $events->listen('eloquent.saved*', function ($model) use ($events) {
-                new ModelObserver($model, $events);
-            });
+            new ModelObserver($this->app);
         }
-
     }
 }

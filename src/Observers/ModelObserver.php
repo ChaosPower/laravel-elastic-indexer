@@ -2,11 +2,8 @@
 
 namespace ElasticEqb\Observers;
 
-use ElasticEqb\Api\Indices\Index;
-use ElasticEqb\Interfaces\ElasticIndexer;
-use ElasticEqb\Traits\IndexesModel;
-use Event;
-use Illuminate\Contracts\Events\Dispatcher;
+use ElasticEqb\Listeners\ElasticListener;
+use Illuminate\Contracts\Foundation\Application;
 
 /**
  * Class ModelObserver
@@ -15,46 +12,54 @@ use Illuminate\Contracts\Events\Dispatcher;
  */
 class ModelObserver
 {
+
+    /**
+     * @var \Illuminate\Contracts\Foundation\Application
+     */
+    protected $app;
     /**
      * @var
      */
-    protected $model;
-    /**
-     * @var \Illuminate\Contracts\Events\Dispatcher
-     */
-    protected $event;
+    protected $events;
 
-    protected $indexer;
 
     /**
-     * @param                                         $model
-     * @param \Illuminate\Contracts\Events\Dispatcher $event
+     * @var array
      */
-    public function __construct($model, Dispatcher $event)
+    protected $eloquentEvents = [
+        'creating',
+        'created',
+        'updating',
+        'updated',
+        'deleting',
+        'deleted',
+        'saving',
+        'saved',
+        'restoring',
+        'restored',
+    ];
+
+    /**
+     * @param \Illuminate\Contracts\Foundation\Application $app
+     */
+    public function __construct(Application $app)
     {
-            if(!$model instanceof ElasticIndexer) {
-                return;
-            }
-
-            $this->model = $model;
-            $this->event = $event;
-            $this->indexer = new Index($model);
-
-            $this->boot();
+        $this->app = $app;
+        // Boot the observer
+        $this->boot();
     }
 
 
     /**
-     * Function for boot indexer
+     * Function to boot indexer
      */
     public function boot()
     {
-        // Call the model trait indexer
-        $this->model->indexModel();
+        $this->events = $this->app->make('events');
 
-        // Call Indices
-        if (!$this->indexer->create($this->model->index)) {
-
+        // Loop events
+        foreach($this->eloquentEvents as $event) {
+            $this->events->listen('eloquent.'.$event.'*', ElasticListener::class . '@'.$event);
         }
     }
 }
