@@ -48,7 +48,7 @@ and CRUD the Elastic side of the model. It will also do the elastic map automati
  *
  * @package Travel\Models
  */
-class Agency extends Model implements DoesElasticIndexer
+class Agency extends Model implements ElasticIndexer
 {
     use DoesElasticIndexer;
 }
