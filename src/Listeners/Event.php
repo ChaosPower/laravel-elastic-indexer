@@ -3,6 +3,7 @@
 namespace ElasticEqb\Listeners;
 
 use ElasticEqb\Api\Indices\Index;
+use ElasticEqb\Interfaces\ElasticIndexer;
 use ElasticEqb\Interfaces\ElasticListener;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,13 +24,6 @@ abstract class Event implements ElasticListener
     protected $indexer;
 
     /**
-     *
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * @param \Illuminate\Database\Eloquent\Model $model
      */
     public function creating(Model $model)
@@ -41,9 +35,27 @@ abstract class Event implements ElasticListener
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
      */
+    public function indexer(Model $model)
+    {
+        // Check model if has instance of ElasticIndexer
+        if (!$model instanceof ElasticIndexer) {
+            return;
+        }
+
+        // Boot model for index
+        $model->indexModel();
+        $this->indexer = new Index($model);
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Model $model
+     */
     public function created(Model $model)
     {
         $this->indexer($model);
+        if(!$this->indexer->create()) {
+            $this->indexer->document()->save();
+        }
     }
 
     /**
@@ -108,13 +120,5 @@ abstract class Event implements ElasticListener
     public function restored(Model $model)
     {
         $this->indexer($model);
-    }
-
-    /**
-     * @param \Illuminate\Database\Eloquent\Model $model
-     */
-    public function indexer(Model $model)
-    {
-        $this->indexer = new Index($model);
     }
 }

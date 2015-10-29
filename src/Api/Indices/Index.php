@@ -31,6 +31,11 @@ class Index extends Model implements IndicesTemplate
     protected $model;
 
     /**
+     * @var Document
+     */
+    protected $document;
+
+    /**
      * @param \Illuminate\Database\Eloquent\Model $model
      */
     public function __construct(EloquentModel $model)
@@ -41,14 +46,16 @@ class Index extends Model implements IndicesTemplate
         $this->model = $model;
     }
 
+
     /**
-     * @param       $index
      * @param array $config
      *
      * @return bool|\Psr\Http\Message\ResponseInterface
      */
-    public function create($index, $config = [])
+    public function create($config = [])
     {
+        $index = $this->model->index;
+
         if (!$this->has($index)) {
             return $this->connection->getClient()->put('/' . $index . '/', [
                 'body' => $this
@@ -84,8 +91,19 @@ class Index extends Model implements IndicesTemplate
      */
     public function document()
     {
-        $document = new Document($this->model);
-
+        $this->document = new Document($this->model);
         return $this;
+    }
+
+    public function save()
+    {
+        try {
+            return $this->connection->getClient()->put('/' . $this->model->index . '/'.$this->model->type.'/'.$this->model->id, [
+                'body' => $this->document
+            ]);
+
+        } catch (ClientException $e) {
+            return false;
+        }
     }
 }

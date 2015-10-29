@@ -45,13 +45,14 @@ class ModelObserver
     public function __construct(Application $app)
     {
         $this->app = $app;
-        // Boot the observer
+        // Boot the listeners
         $this->boot();
     }
 
 
     /**
      * Function to boot indexer
+     * @see
      */
     public function boot()
     {

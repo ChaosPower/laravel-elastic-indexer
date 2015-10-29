@@ -3,7 +3,9 @@
     "description": "Laravel Elastic Eloquent Query Builder",
     "type": "project",
     "require": {
-        "guzzlehttp/guzzle": "6.1.0"
+        "php": ">=5.5",
+        "guzzlehttp/guzzle": "6.1.0",
+        "league/fractal" : "0.13.0"
     },
     "require-dev": {
         "mockery/mockery": "^0.9.4",

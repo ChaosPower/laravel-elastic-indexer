@@ -18,5 +18,12 @@ class Document extends Model
     public function __construct(EloquentModel $model)
     {
         parent::__construct($model);
+
+        return $this->__toString();
+    }
+
+    public function __toString()
+    {
+        return $this->model->toJson();
     }
 }
