@@ -2,7 +2,7 @@
 
 namespace ElasticEqb\Providers;
 
-use ElasticEqb\Observers\ModelObserver;
+use ElasticEqb\Central\Ignite;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -37,7 +37,7 @@ class ElasticProvider extends ServiceProvider
 
         // Check if elastic is set to auto index
         if (config('elastic.auto_index')) {
-            new ModelObserver($this->app);
+            new Ignite($this->app);
         }
     }
 }

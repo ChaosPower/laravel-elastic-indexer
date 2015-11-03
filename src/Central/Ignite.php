@@ -1,16 +1,16 @@
 <?php
 
-namespace ElasticEqb\Observers;
+namespace ElasticEqb\Central;
 
 use ElasticEqb\Listeners\ElasticListener;
 use Illuminate\Contracts\Foundation\Application;
 
 /**
- * Class ModelObserver
+ * Class Ignite
  *
- * @package ElasticEqb\Observers
+ * @package ElasticEqb\Central
  */
-class ModelObserver
+class Ignite
 {
 
     /**

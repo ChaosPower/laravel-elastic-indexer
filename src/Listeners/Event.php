@@ -45,6 +45,7 @@ abstract class Event implements ElasticListener
         // Boot model for index
         $model->indexModel();
         $this->indexer = new Index($model);
+        $this->indexer->save();
     }
 
     /**

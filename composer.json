@@ -3,7 +3,8 @@
     "description": "Laravel Elastic Eloquent Query Builder",
     "type": "project",
     "require": {
-        "php": ">=5.5",
+        "php": ">=5.5.9",
+        "laravel/framework": "5.1.*",
         "guzzlehttp/guzzle": "6.1.0",
         "league/fractal" : "0.13.0"
     },
@@ -20,9 +21,12 @@
     ],
 
     "autoload": {
-        "psr-4": {"ElasticEqb\\": "src/"},
-        "psr-4": {"ElasticEqbTest\\": "tests/"}
+        "psr-4": {"ElasticEqb\\": "src/"}
     },
-
+    "autoload-dev": {
+        "psr-4": {
+            "ElasticEqb\\Test\\": "tests/"
+        }
+    },
     "minimum-stability": "stable"
 }

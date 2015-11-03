@@ -77,11 +77,7 @@ class Index extends Model implements IndicesTemplate
         try {
             return $this->connection->getClient()->head('/' . $index, ['body' => '']);
         } catch (ClientException $e) {
-            if ($e->getCode() == 404) {
-                return false;
-            } else {
-                return $e;
-            }
+            return $e->getCode() == 404 ? false : $e;
         }
     }
 
@@ -93,6 +89,11 @@ class Index extends Model implements IndicesTemplate
     {
         $this->document = new Document($this->model);
         return $this;
+    }
+
+    public function delete()
+    {
+        return $this->has($this->model->index) ? $this->connection->getClient()->delete('/' . $this->model->index) : false;
     }
 
     public function save()
